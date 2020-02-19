@@ -1,18 +1,25 @@
 <template>
-  <div class="hello">
-<ul class="list-unstyled">
-  <li class="media">
-    <img src="http://www.w3.org/2000/svg" class="mr-3" alt="...">
-    <div class="media-body">
-      <h5 class="mt-0 mb-1">List-based media object</h5>
-      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-    </div>
-  </li>
-</ul>
+  <div class="hello" mt-3>
+    <ul class="list-unstyled">
+      <li class="media m-3" v-for="post in posts">
+
+        <img :src="post.data.thumbnail" class="mr-3" alt="Generic Placeholder Image">
+        <div class="media-body">
+          <h5 class="mt-0 mb-1">{{post.data.title}}</h5>
+          <p>
+            <h3 class="text-danger">{{post.data.ups}} ⬆️</h3>
+            <p>created {{formatDate(post.data.created_utc)}} ago</p>
+            <span class="badge badge-secondary">{{post.data.num_comments}} comments</span>
+          </p>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
+import { parse, formatDistanceToNow, formatDistance } from "date-fns";
+
 export default {
   name: "Posts",
   data() {
@@ -31,9 +38,13 @@ export default {
         .then(result => {
           this.posts = result.data.children;
         });
+    },
+    formatDate(date) {
+      return formatDistanceToNow(date * 1000);
     }
   }
 };
 </script>
-
+<style>
 </style>
+
