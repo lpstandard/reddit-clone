@@ -58,7 +58,9 @@ export default {
     createUrl(path) {
       return `https://www.reddit.com${path}`;
     },
-    isImage(post) {}
+    isImage(post) {
+      return post.data.url.match(/\.(jpg|png|bpm|jpeg)$/);
+    }
   }
 };
 </script>
